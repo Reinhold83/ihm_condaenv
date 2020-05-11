@@ -1,27 +1,19 @@
-FROM gcr.io/google-appengine/python
+FROM continuumio/miniconda:latest
 
-RUN apt-get update && apt-get install -y \
-  binutils \
-  gdal-bin \
-  python-gdal 
+WORKDIR /home/reinhold/Documents/webapps/house_market_app/ihm_condaenv
 
-# Create a virtualenv for dependencies. This isolates these packages from
-# system-level packages.
-RUN virtualenv /venv -p python3.7
+COPY environment.yml ./
+COPY app.py ./
+COPY boot.sh ./
+
+RUN chmod +x boot.sh
+
+RUN conda env create -f environment.yml
+
+RUN echo "source activate ihm_condaenv" > ~/.bashrc
+ENV PATH /home/reinhold/anaconda3/envs/ihm_condaenv/bin:$PATH
 
 
-# Setting these environment variables are the same as running
-# source /env/bin/activate.
-ENV VIRTUAL_ENV /venv
-ENV PATH /env/bin:$PATH
+EXPOSE 5000
 
-# Copy the application's requirements.txt and run pip to install all
-# dependencies into the virtualenv.
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
-# Add the application source code.
-ADD . /app
-
-# Run a WSGI server to serve the application. gunicorn must be declared as
-# a dependency in requirements.txt.
-CMD gunicorn -b :$PORT wsgi.py
+ENTRYPOINT ["./boot.sh"]
