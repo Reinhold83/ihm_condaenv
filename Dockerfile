@@ -16,4 +16,4 @@ ENV PATH /home/reinhold/anaconda3/envs/ihm_condaenv/bin:$PATH
 
 EXPOSE 5000
 
-ENTRYPOINT ["./boot.sh"]
+ENTRYPOINT gunicorn -b :$PORT app:app
