@@ -13,7 +13,6 @@ RUN conda env create -f environment.yml
 RUN echo "source activate ihm_condaenv" > ~/.bashrc
 ENV PATH /home/reinhold/anaconda3/envs/ihm_condaenv/bin:$PATH
 
+EXPOSE 8080
 
-EXPOSE 5000
-
-ENTRYPOINT gunicorn -b :$PORT app:app
+#CMD ["./boot.sh"]
