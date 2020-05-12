@@ -4,9 +4,10 @@ WORKDIR /home/reinhold/Documents/webapps/house_market_app/ihm_condaenv
 
 COPY environment.yml ./
 COPY app.py ./
-COPY boot.sh ./
+#COPY boot.sh ./
 
-RUN chmod +x boot.sh
+
+#RUN chmod +x boot.sh
 
 RUN conda env create -f environment.yml
 
@@ -15,4 +16,5 @@ ENV PATH /home/reinhold/anaconda3/envs/ihm_condaenv/bin:$PATH
 
 EXPOSE 8080
 
+CMD gunicorn -b :$PORT app:app
 #CMD ["./boot.sh"]
