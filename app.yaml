@@ -1,7 +1,17 @@
 runtime: custom
 env: flex
 
-entrypoint: gunicorn -b :$PORT app:app
+resources:
+  cpu: 4
+  memory_gb: 6.5
+  disk_size_gb: 10
 
-runtime_config:
-    python_version: 3
+liveness_check:
+  path: "/liveness_check"
+  check_interval_sec: 120
+  timeout_sec: 90
+
+#entrypoint: gunicorn -b :$PORT app:app
+
+#runtime_config:
+    #python_version: 3
