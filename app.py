@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from bokeh.embed import components
-from plots1 import houseStockPlot, vacantPlot, Transactions, NewRegistered, nonOccupiers, pie_chart, maps
+from plots1 import houseStockPlot, vacantPlot, Transactions, NewRegistered, nonOccupiers, pie_chart
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -20,10 +20,10 @@ def bokeh():
     script3, div3 = components(NewRegistered())
     script4, div4 = components(nonOccupiers())
     script5, div5 = components(pie_chart())
-    script6, div6 = components(maps())
+    #script6, div6 = components(maps())
 
 
     return render_template('bokeh.html', script=script, div=div, script1=script1,
     div1=div1, script2=script2, div2=div2, script3= script3, div3=div3, script4=script4, div4=div4,
-    script5=script5, div5=div5, script6=script6, div6=div6)
+    script5=script5, div5=div5)
 
